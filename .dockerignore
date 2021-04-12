@@ -1,0 +1,9 @@
+# Ignore everything
+**
+
+# Allow files and directories
+!example.py
+!pyproject.toml
+!poetry.lock
+
+!tcp/proxy.conf

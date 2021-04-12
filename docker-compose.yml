@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  tcp_app:
+    image: 366328713202.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp
+    build:
+      context: .
+      dockerfile: tcp.Dockerfile
+
+  tcp_nginx:
+    image: 366328713202.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp:nginx
+    build:
+      context: .
+      dockerfile: tcp/nginx.Dockerfile
+    environment:
+      - "NGINX_ENTRYPOINT_QUIET_LOGS=1"
+    ports:
+        - "8443:443"
+    depends_on:
+      - "tcp_app"
