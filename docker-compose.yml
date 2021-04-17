@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  tcp_app:
+  tcp:
     image: 366328713202.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp
     build:
       context: .
@@ -16,4 +16,4 @@ services:
     ports:
         - "8443:443"
     depends_on:
-      - "tcp_app"
+      - "tcp"
