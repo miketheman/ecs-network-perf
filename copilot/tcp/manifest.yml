@@ -45,5 +45,5 @@ exec: true     # Enable running commands in your container.
 # https://aws.github.io/copilot-cli/docs/developing/sidecars/
 sidecars:
   nginx:
-    port: 443
+    port: 80
     image: 366328713202.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp:nginx

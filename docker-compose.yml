@@ -14,6 +14,6 @@ services:
     environment:
       - "NGINX_ENTRYPOINT_QUIET_LOGS=1"
     ports:
-        - "8443:443"
+        - "8080:80"
     depends_on:
       - "tcp"

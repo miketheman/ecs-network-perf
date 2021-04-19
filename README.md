@@ -31,16 +31,7 @@ run in the target ECS environment.
 
 Build and run with: `docker-compose up tcp_nginx`
 
-Test with: `curl -k https://localhost:8443`
-
-**Note**: In local development, and for the purposes if this demo, we're using
-a self-signed certificate **inside** the `nginx` container - to support
-_encryption in transit_ - but not verification of the destination.
-If we wanted to make something that would reflect a real-world scenario that
-uses verifiable certificates, we'd [look to this post](https://aws.amazon.com/blogs/compute/maintaining-transport-layer-security-all-the-way-to-your-container-part-2-using-aws-certificate-manager-private-certificate-authority/)
-for some ideas.
-
-A self-signed certificate is good enough for a demo of end-to-end SSL.
+Test with: `curl http://localhost:8080`
 
 Make sure to run `docker-compose down` to stop & remove any running containers.
 
