@@ -47,3 +47,6 @@ sidecars:
   nginx:
     port: 80
     image: 366328713202.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp:nginx
+    variables:
+      # Use the awsvpc network to communicate between Task containers
+      APP_HOST: localhost

@@ -1,12 +1,16 @@
 upstream app {
-    server tcp:8000;
+    # The server name is substituted at container launch time, since
+    # there's a difference between local docker-compose and AWS ECS.
+    server ${APP_HOST}:8000;
 }
 
 server {
     listen       80;
     server_name  _;
 
-    access_log  /dev/stdout     combined;
+    # We don't need all the noise, but enable to debug requests
+    # access_log  /dev/stdout     combined;
+    access_log off;
 
     location / {
         proxy_pass http://app;

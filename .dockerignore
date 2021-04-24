@@ -6,4 +6,5 @@
 !pyproject.toml
 !poetry.lock
 
-!tcp/proxy.conf
+# tcp service proxy configuration template
+!tcp/templates/default.conf.template

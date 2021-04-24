@@ -7,12 +7,13 @@ services:
       dockerfile: tcp.Dockerfile
 
   tcp_nginx:
+    # Need to build the image to include our config for Copilit sidecar usage
     image: 366328713202.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp:nginx
     build:
       context: .
       dockerfile: tcp/nginx.Dockerfile
     environment:
-      - "NGINX_ENTRYPOINT_QUIET_LOGS=1"
+      - "APP_HOST=tcp"
     ports:
         - "8080:80"
     depends_on:
