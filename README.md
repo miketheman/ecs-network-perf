@@ -51,7 +51,32 @@ copilot env init --name test --profile <named profile> --default-config
 Again, in a production environment, you may want to audit and/or customize
 these choices.
 
+### nginx sidecar
+
+As the Copilot CLI doesn't yet know how to build&push a "sidecar" (proxy)
+container, we have to build and push it locally, and then reference it in the
+manifest.
+See:
+- https://aws.github.io/copilot-cli/docs/developing/sidecars/
+- https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#http-target-container
+
+Steps are shown below on where and when to push the sidecar for each service.
+
 ### tcp
+
+Initialize the `tcp` service:
+
+```shell
+copilot svc init --namen tcp --svc-type "Load Balanced Web Service" --dockerfile tcp.Dockerfile
+```
+This will initialize from the existing `copilot/tcp/manifest.yml` file.
+
+Before we can deploy the service, we need to push the `nginx` proxy sidecar image:
+
+```shell
+docker compose build tcp_nginx
+docker push <account id>.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp:nginx
+```
 
 Deploy the `tcp` Service to the `test` Environment:
 
@@ -64,3 +89,9 @@ After about 5 minutes or so, you'll have a URL that looks something like:
     http://ecs-n-Publi-<some weird set of characters>.us-east-1.elb.amazonaws.com.
 
 And the service should be available!
+
+Clean up the service with:
+
+```shell
+copilot svc delete --name tcp --env test
+```
