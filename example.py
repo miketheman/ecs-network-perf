@@ -20,5 +20,7 @@ app = Starlette(
     debug=True,
     routes=[
         Route("/", homepage),
+        # Catch-all - the Load Balancer may prepend paths in our test scenario
+        Route("/{anything}", homepage),
     ],
 )
