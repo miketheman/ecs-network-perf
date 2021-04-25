@@ -1,14 +1,14 @@
+# Read the README.md for descriptions of the services and the choices made here
 version: "3.9"
 services:
   tcp:
-    image: 366328713202.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp
+    image: ${COPILOT_AWS_ACCOUNT_ID}.dkr.ecr.${COPILOT_AWS_REGION}.amazonaws.com/ecs-network-perf/tcp
     build:
       context: .
       dockerfile: tcp.Dockerfile
 
   tcp_nginx:
-    # Need to build the image to include our config for Copilit sidecar usage
-    image: 366328713202.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp:nginx
+    image: ${COPILOT_AWS_ACCOUNT_ID}.dkr.ecr.${COPILOT_AWS_REGION}.amazonaws.com/ecs-network-perf/tcp:nginx
     build:
       context: .
       dockerfile: tcp/nginx.Dockerfile
@@ -20,8 +20,32 @@ services:
       - "tcp"
 
   combined:
+    image: ${COPILOT_AWS_ACCOUNT_ID}.dkr.ecr.${COPILOT_AWS_REGION}.amazonaws.com/ecs-network-perf/combined
     build:
       context: .
       dockerfile: combined.Dockerfile
     ports:
       - "8081:80"
+
+  sharedvol:
+    image: ${COPILOT_AWS_ACCOUNT_ID}.dkr.ecr.${COPILOT_AWS_REGION}.amazonaws.com/ecs-network-perf/sharedvol
+    build:
+      context: .
+      dockerfile: sharedvol.Dockerfile
+    volumes:
+      - sharedvol_tmp:/tmp
+
+  sharedvol_nginx:
+    image: ${COPILOT_AWS_ACCOUNT_ID}.dkr.ecr.${COPILOT_AWS_REGION}.amazonaws.com/ecs-network-perf/sharedvol:nginx
+    build:
+      context: .
+      dockerfile: sharedvol/nginx.Dockerfile
+    ports:
+      - "8082:80"
+    volumes:
+      - sharedvol_tmp:/tmp
+    depends_on:
+      - "sharedvol"
+
+volumes:
+  sharedvol_tmp:

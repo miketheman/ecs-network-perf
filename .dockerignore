@@ -13,3 +13,6 @@
 !combined/services/*.sh
 # combined nginx proxy file
 !combined/proxy.conf
+
+# sharedvol socket proxy
+!sharedvol/proxy.conf
