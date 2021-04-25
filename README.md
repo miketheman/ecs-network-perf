@@ -111,3 +111,26 @@ copilot svc delete --name tcp --env test
 ```shell
 copilot svc init --name combined --svc-type "Load Balanced Web Service" --dockerfile combined.Dockerfile
 ```
+
+```shell
+copilot svc delete --name combined --env test
+```
+
+### sharedvol
+
+```shell
+copilot svc init --name sharedvol --svc-type "Load Balanced Web Service" --dockerfile sharedvol.Dockerfile
+```
+
+```shell
+docker compose build sharedvol_nginx
+docker push <account id>.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/sharedvol:nginx
+```
+
+```shell
+copilot svc deploy --name sharedvol --env test
+```
+
+```shell
+copilot svc delete --name sharedvol --env test
+```
