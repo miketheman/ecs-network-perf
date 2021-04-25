@@ -1,9 +1,9 @@
 FROM python:3-slim
 ENV PYTHONUNBUFFERED=1
 
-RUN apt-get update \
-    && apt-get install gcc -y \
-    && apt-get clean
+RUN apt update \
+    && apt install gcc -y \
+    && apt clean
 RUN pip install --no-cache-dir poetry
 
 WORKDIR /app

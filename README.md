@@ -29,9 +29,19 @@ Open http://localhost:8000 to see the response.
 Using `docker-compose`, we can create the same images that we would expect to
 run in the target ECS environment.
 
-Build and run with: `docker-compose up tcp_nginx`
+Build and run with: `docker-compose up`
 
-Test with: `curl http://localhost:8080`
+Test with:
+
+```shell
+# tcp service
+curl http://localhost:8080
+# combined service
+curl http://localhost:8081
+```
+
+All should repsond similarly - with the request flowing through the nginx
+container to the Python application container, and return a JSON response.
 
 Make sure to run `docker-compose down` to stop & remove any running containers.
 

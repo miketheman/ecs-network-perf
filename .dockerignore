@@ -8,3 +8,8 @@
 
 # tcp service proxy configuration template
 !tcp/templates/default.conf.template
+
+# combined s6 services run scripts
+!combined/services/*.sh
+# combined nginx proxy file
+!combined/proxy.conf
