@@ -77,7 +77,7 @@ Steps are shown below on where and when to push the sidecar for each service.
 Initialize the `tcp` service:
 
 ```shell
-copilot svc init --namen tcp --svc-type "Load Balanced Web Service" --dockerfile tcp.Dockerfile
+copilot svc init --name tcp --svc-type "Load Balanced Web Service" --dockerfile tcp.Dockerfile
 ```
 This will initialize from the existing `copilot/tcp/manifest.yml` file.
 
@@ -104,4 +104,10 @@ Clean up the service with:
 
 ```shell
 copilot svc delete --name tcp --env test
+```
+
+### combined
+
+```shell
+copilot svc init --name combined --svc-type "Load Balanced Web Service" --dockerfile combined.Dockerfile
 ```
