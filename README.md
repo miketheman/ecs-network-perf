@@ -22,7 +22,7 @@ For a production-level workload, run:
 poetry run gunicorn -k uvicorn.workers.UvicornWorker example:app
 ```
 
-Open http://localhost:8000 to see the response.
+Open <http://localhost:8000> to see the response.
 
 ### Docker Development
 
@@ -38,6 +38,8 @@ Test with:
 curl http://localhost:8080
 # combined service
 curl http://localhost:8081
+# sharedvol service
+curl http://localhost:8082
 ```
 
 All should repsond similarly - with the request flowing through the nginx
@@ -47,7 +49,7 @@ Make sure to run `docker-compose down` to stop & remove any running containers.
 
 ## Deploy
 
-Read about the Copilot concepts here: https://aws.github.io/copilot-cli/docs/concepts/overview/
+Read about the Copilot concepts here: <https://aws.github.io/copilot-cli/docs/concepts/overview/>
 
 For the purpose of this test, we'll create one Environment named `test`, and
 deploy multiple Services with the different configurations we want to compare.
@@ -67,8 +69,9 @@ As the Copilot CLI doesn't yet know how to build&push a "sidecar" (proxy)
 container, we have to build and push it locally, and then reference it in the
 manifest.
 See:
-- https://aws.github.io/copilot-cli/docs/developing/sidecars/
-- https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#http-target-container
+
+- <https://aws.github.io/copilot-cli/docs/developing/sidecars/>
+- <https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#http-target-container>
 
 Steps are shown below on where and when to push the sidecar for each service.
 
@@ -79,6 +82,7 @@ Initialize the `tcp` service:
 ```shell
 copilot svc init --name tcp --svc-type "Load Balanced Web Service" --dockerfile tcp.Dockerfile
 ```
+
 This will initialize from the existing `copilot/tcp/manifest.yml` file.
 
 Before we can deploy the service, we need to push the `nginx` proxy sidecar image:
@@ -96,7 +100,9 @@ copilot svc deploy --name tcp --env test
 
 After about 5 minutes or so, you'll have a URL that looks something like:
 
-    http://ecs-n-Publi-<some weird set of characters>.us-east-1.elb.amazonaws.com.
+```text
+http://ecs-n-Publi-<some weird set of characters>.us-east-1.elb.amazonaws.com.
+```
 
 And the service should be available!
 
@@ -111,6 +117,13 @@ copilot svc delete --name tcp --env test
 ```shell
 copilot svc init --name combined --svc-type "Load Balanced Web Service" --dockerfile combined.Dockerfile
 ```
+
+```shell
+copilot svc deploy --name combined --env test
+```
+
+Keep in mind: The output URL should have the service name as part of the URL,
+like `http://..../combined` - as all services share the same Application Load Balancer.
 
 ```shell
 copilot svc delete --name combined --env test
