@@ -13,4 +13,7 @@ RUN poetry config virtualenvs.create false && poetry install --no-dev
 
 COPY . /app
 
+# We expose a port, despite not listening on it for Coilot CLI
+EXPOSE 9999
+
 CMD ["gunicorn", "-b", "unix:/tmp/gunicorn.sock", "-k", "uvicorn.workers.UvicornWorker", "example:app"]
