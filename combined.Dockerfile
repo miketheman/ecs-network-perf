@@ -10,8 +10,8 @@ FROM python:3-slim
 ENV PYTHONUNBUFFERED=1
 
 # https://github.com/just-containers/s6-overlay
-ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-amd64-installer /tmp/
-RUN chmod +x /tmp/s6-overlay-amd64-installer && /tmp/s6-overlay-amd64-installer /
+ADD https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-arm-installer /tmp/
+RUN chmod +x /tmp/s6-overlay-arm-installer && /tmp/s6-overlay-arm-installer /
 
 # From https://git.io/JO7Wr
 RUN addgroup --system --gid 101 nginx \
