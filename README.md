@@ -1,6 +1,7 @@
 # ecs-network-perf
 
-TODO: Explain/link to what this is.
+An experiment in testing the performance difference between container-to-container
+communications when both containers are co-located with AWS Fargate.
 
 ## Local Development
 
@@ -42,7 +43,7 @@ curl http://localhost:8081
 curl http://localhost:8082
 ```
 
-All should repsond similarly - with the request flowing through the nginx
+All should respond similarly - with the request flowing through the nginx
 container to the Python application container, and return a JSON response.
 
 Make sure to run `docker-compose down` to stop & remove any running containers.
@@ -89,7 +90,7 @@ Before we can deploy the service, we need to push the `nginx` proxy sidecar imag
 
 ```shell
 docker compose build tcp_nginx
-docker push <account id>.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp:nginx
+docker push "$COPILOT_AWS_ACCOUNT_ID.dkr.ecr.$COPILOT_AWS_REGION.amazonaws.com/ecs-network-perf/tcp:nginx"
 ```
 
 Deploy the `tcp` Service to the `test` Environment:
@@ -137,7 +138,7 @@ copilot svc init --name sharedvol --svc-type "Load Balanced Web Service" --docke
 
 ```shell
 docker compose build sharedvol_nginx
-docker push <account id>.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/sharedvol:nginx
+docker push "$COPILOT_AWS_ACCOUNT_ID.dkr.ecr.$COPILOT_AWS_REGION.amazonaws.com/ecs-network-perf/sharedvol:nginx"
 ```
 
 ```shell
@@ -147,3 +148,7 @@ copilot svc deploy --name sharedvol --env test
 ```shell
 copilot svc delete --name sharedvol --env test
 ```
+
+## Author
+
+[Mike Fiedler](https://github.com/miketheman)

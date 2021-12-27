@@ -46,7 +46,7 @@ exec: true     # Enable running commands in your container.
 sidecars:
   nginx:
     port: 80
-    image: 366328713202.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp:nginx
+    image: ${COPILOT_AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ecs-network-perf/tcp:nginx
     variables:
       # Use the awsvpc network to communicate between Task containers
       APP_HOST: localhost
