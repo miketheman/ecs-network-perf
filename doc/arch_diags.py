@@ -6,7 +6,26 @@ from diagrams.onprem.client import User
 from diagrams.onprem.network import Nginx
 from diagrams.programming.language import Python
 
-with Diagram(name="", filename="components", show=False, graph_attr={"pad": "0.5"}):
+
+class CustomDiagram(Diagram):
+    """Custom Diagram to apply global options to all sub-objects"""
+
+    graph_attrs = {"fontcolor": "black", "pad": "0.5"}
+    node_attrs = {"fontcolor": "black"}
+    edge_attrs = {"fontcolor": "black"}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            *args,
+            **kwargs,
+            show=False,
+            graph_attr=self.graph_attrs,
+            node_attr=self.node_attrs,
+            edge_attr=self.edge_attrs
+        )
+
+
+with CustomDiagram(name="", filename="components"):
     client = User("client")
     nginx = Nginx("nginx")
     nx_to_py = Edge(label="proxies requests to")
@@ -18,8 +37,9 @@ with Diagram(name="", filename="components", show=False, graph_attr={"pad": "0.5
 ALB_EDGE = Edge(label="proxies traffic to")
 
 
-with Diagram(
-    name="architecture: tcp", filename="tcp", show=False, graph_attr={"pad": "0.5"}
+with CustomDiagram(
+    name="architecture: tcp",
+    filename="tcp",
 ):
     with Cluster("ECS Cluster w/Fargate Compute"):
         nginx = ElasticContainerServiceContainer("nginx container")
@@ -30,11 +50,9 @@ with Diagram(
     ALB(label="application load balancer") >> ALB_EDGE >> nginx
 
 
-with Diagram(
+with CustomDiagram(
     name="architecture: sharevol",
     filename="sharedvol",
-    show=False,
-    graph_attr={"pad": "0.5"},
 ):
     with Cluster("ECS Cluster w/Fargate Compute"):
         nginx = ElasticContainerServiceContainer("nginx container")
@@ -46,11 +64,9 @@ with Diagram(
     ALB(label="application load balancer") >> ALB_EDGE >> nginx
 
 
-with Diagram(
+with CustomDiagram(
     name="architecture: combined",
     filename="combined",
-    show=False,
-    graph_attr={"pad": "0.5"},
 ):
     with Cluster("ECS Cluster w/Fargate Compute"):
         with Cluster(
