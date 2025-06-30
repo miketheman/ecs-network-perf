@@ -6,7 +6,7 @@
 FROM public.ecr.aws/nginx/nginx:latest as nginx
 # nothing to do here, we're not customizing this layer.
 
-FROM python:3-slim
+FROM public.ecr.aws/docker/library/python:3.12-slim
 ENV PYTHONUNBUFFERED=1
 
 # https://github.com/just-containers/s6-overlay

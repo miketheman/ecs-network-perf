@@ -8,7 +8,7 @@ communications when both containers are co-located with AWS Fargate.
 Install runtime and dev dependencies with:
 
 ```console
-poetry install
+poetry install --no-root
 ```
 
 Run local app via:
@@ -71,8 +71,8 @@ container, we have to build and push it locally, and then reference it in the
 manifest.
 See:
 
-- <https://aws.github.io/copilot-cli/docs/developing/sidecars/>
-- <https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#http-target-container>
+-   <https://aws.github.io/copilot-cli/docs/developing/sidecars/>
+-   <https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#http-target-container>
 
 Steps are shown below on where and when to push the sidecar for each service.
 
